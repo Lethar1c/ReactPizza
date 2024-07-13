@@ -96,6 +96,7 @@ a {
 
 .header__control {
   display: flex;
+  margin-top: 10px;
   justify-content: end;
   width: 60%;
 }
@@ -511,7 +512,7 @@ body {
 
 .container {
   width: 90%;
-  margin: 0 auto
+  margin: 10px auto 0;
 }
 
 .container--cart {
@@ -665,7 +666,8 @@ body {
 }
 
 .cart__item-count b {
-  font-size: 22px
+  font-size: 22px;
+  margin: 0 5px;
 }
 
 .cart__item-price {
@@ -898,5 +900,11 @@ body {
     bottom: 5vmin;
     right: 5vmin;
     z-index: 100;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart__bottom-details {
+    flex-direction: column;
   }
 }

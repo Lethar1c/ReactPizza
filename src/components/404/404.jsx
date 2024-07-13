@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import emptyCart from "../../img/empty-cart.png"
+
 
 export default function NotFound() {
   return (
@@ -13,8 +15,8 @@ export default function NotFound() {
             <br />
             Для того, чтобы заказать пиццу, перейди на главную страницу.
           </p>
-          <img src="/img/empty-cart.png" alt="Empty cart" />
-          <Link to="/" className="button button--black">
+          <img src={emptyCart} alt="Empty cart" />
+          <Link to="../ReactPizza" className="button button--black">
             <span>Вернуться назад</span>
           </Link>
         </div>

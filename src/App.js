@@ -96,10 +96,10 @@ function App() {
             cartCount={getCartCount(cartList)}
           />
           <Routes>
-            <Route path="/" element={<Content searchValue={searchValue} />} />
-            <Route path="cart.html" element={<Cart />}>
+            <Route path="ReactPizza/" element={<Content searchValue={searchValue} />} />
+            <Route path="ReactPizza/Cart" element={<Cart />}>
               <Route
-                path="../"
+                path="../ReactPizza/"
                 element={<Content searchValue={searchValue} />}
               />
             </Route>
