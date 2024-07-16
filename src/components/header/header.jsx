@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import Search from "./search";
 import Logo from "../../img/pizza-logo.svg";
+import { getCartCount, getCartPrice } from "../../redux/slices/cartSlice";
+import { useSelector } from "react-redux";
 
-export default function Header({searchValue, setSearchValue, cartPrice, cartCount}) {
+export default function Header() {
+  const cartList = useSelector((state) => (state.cart.itemList));
+
   return (
     <div className="header">
       <div className="container">
@@ -14,10 +18,10 @@ export default function Header({searchValue, setSearchValue, cartPrice, cartCoun
           </div>
         </div>
         <div className="header__control">
-          <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+          <Search />
           <div className="header__cart">
             <Link to="ReactPizza/Cart" className="button button--cart">
-              <span>{cartPrice} ₽</span>
+              <span>{getCartPrice(cartList)} ₽</span>
               <div className="button__delimiter"></div>
               <svg
                 width="18"
@@ -48,7 +52,7 @@ export default function Header({searchValue, setSearchValue, cartPrice, cartCoun
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>{cartCount}</span>
+              <span>{getCartCount(cartList)}</span>
             </Link>
           </div>
         </div>

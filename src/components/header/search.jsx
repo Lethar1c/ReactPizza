@@ -1,12 +1,18 @@
-export default function Search({ searchValue, setSearchValue }) {
+import { useDispatch } from "react-redux";
+import { setSearchText } from "../../redux/slices/filterSlice";
+import { useRef } from "react";
+
+export default function Search() {
+  const dispatch = useDispatch();
+  const inputRef = useRef();
   return (
     <div className="search-bar">
       <input
-        type="text"
+        ref={inputRef}
         name=""
         id=""
         placeholder="Поиск..."
-        onChange={(event) => setSearchValue(event.target.value)}
+        onChange={(event) => dispatch(setSearchText(event.target.value))}
       />
     </div>
   );

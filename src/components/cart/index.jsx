@@ -1,21 +1,23 @@
 import { Link } from "react-router-dom";
-import { CartContext } from "../../App";
 import React from "react";
 import NotFound from "../404/404";
 import CartItem from "./cartItem";
-
-import { getCartCount, getCartPrice } from "../../App";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartList } from "../../redux/slices/cartSlice";
 
 export default function Cart() {
-  const { cartList, setCartList } = React.useContext(CartContext);
+  const cartList = useSelector((state) => (state.cart.itemList));
+  const itemCount = useSelector((state) => (state.cart.itemCount));
+  const cartPrice = useSelector((state) => (state.cart.price))
+  const dispatch = useDispatch();
 
   if (cartList.length === 0) return <NotFound/>
   return (
-    <div class="content">
-      <div class="container container--cart">
-        <div class="cart">
-          <div class="cart__top">
-            <h2 class="content__title">
+    <div className="content">
+      <div className="container container--cart">
+        <div className="cart">
+          <div className="cart__top">
+            <h2 className="content__title">
               <svg
                 width="18"
                 height="18"
@@ -47,7 +49,10 @@ export default function Cart() {
               </svg>
               Корзина
             </h2>
-            <div class="cart__clear" onClick={() => setCartList([])}>
+            <div
+              className="cart__clear"
+              onClick={() => dispatch(setCartList([]))}
+            >
               <svg
                 width="20"
                 height="20"
@@ -88,24 +93,24 @@ export default function Cart() {
               <span>Очистить корзину</span>
             </div>
           </div>
-          <div class="content__items">
+          <div className="content__items">
             {cartList.map((pizza, id) => (
               <CartItem {...pizza} key={id} />
             ))}
           </div>
-          <div class="cart__bottom">
-            <div class="cart__bottom-details">
+          <div className="cart__bottom">
+            <div className="cart__bottom-details">
               <span>
-                Всего пицц: <b>{getCartCount(cartList)} шт.</b>
+                Всего пицц: <b>{itemCount} шт.</b>
               </span>
               <span>
-                Сумма заказа: <b>{getCartPrice(cartList)} ₽</b>
+                Сумма заказа: <b>{cartPrice} ₽</b>
               </span>
             </div>
-            <div class="cart__bottom-buttons">
+            <div className="cart__bottom-buttons">
               <Link
                 to="../ReactPizza"
-                class="button button--outline button--add go-back-btn"
+                className="button button--outline button--add go-back-btn"
               >
                 <svg
                   width="8"
@@ -117,15 +122,15 @@ export default function Cart() {
                   <path
                     d="M7 13L1 6.93015L6.86175 1"
                     stroke="#D3D3D3"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
 
                 <span>Вернуться назад</span>
               </Link>
-              <div class="button pay-btn">
+              <div className="button pay-btn">
                 <span>Оплатить сейчас</span>
               </div>
             </div>

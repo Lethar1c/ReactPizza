@@ -1,35 +1,21 @@
 import React from "react";
-import { CartContext } from "../../App";
+import { getPizzaCount, addToCart } from "../../redux/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function PizzaBlock({
   title,
-  price,
   imageUrl,
   types,
   sizes,
-  prices
+  prices,
 }) {
   const typesDescriptor = ["Традиционное", "Тонкое"];
 
-  const [pizzaCount, setPizzaCount] = React.useState(0);
   const [activeType, setActiveType] = React.useState(0);
   const [activeSizeIndex, setActiveSizeIndex] = React.useState(0);
 
-  const { cartList, setCartList } = React.useContext(CartContext);
-  const isPizzasIdentical = (pizza1, pizza2) => {
-    return (
-      pizza1.title === pizza2.title &&
-      pizza1.size === pizza2.size &&
-      pizza1.type === pizza2.type
-    );
-  };
-
-  const findIdenticalPizza = (pizza, pizzaList) => {
-    for (let i = 0; i < pizzaList.length; i++) {
-      if (isPizzasIdentical(pizza, pizzaList[i])) return i;
-    }
-    return -1;
-  };
+  const cartList = useSelector((state) => state.cart.itemList);
+  const dispatch = useDispatch();
 
   const onAddButtonClick = () => {
     const pizza = {
@@ -38,25 +24,8 @@ export default function PizzaBlock({
       type: activeType,
       size: sizes[activeSizeIndex],
       imageUrl: imageUrl,
-      count: 1,
     };
-    if (findIdenticalPizza(pizza, cartList) === -1) {
-      let cartListCopy = cartList.slice();
-      cartListCopy.push(pizza);
-      setCartList(cartListCopy);
-    } else {
-      let pizzaIndex = findIdenticalPizza(pizza, cartList);
-      let cartListCopy = cartList.slice();
-      cartListCopy[pizzaIndex].count++;
-      setCartList(cartListCopy);
-    }
-    setPizzaCount(pizzaCount + 1);
-  };
-
-  const getPizzaCount = (pizza) => {
-    return findIdenticalPizza(pizza, cartList) === -1
-      ? 0
-      : cartList[findIdenticalPizza(pizza, cartList)].count;
+    dispatch(addToCart(pizza));
   };
 
   return (
@@ -123,7 +92,7 @@ export default function PizzaBlock({
               title: title,
               size: sizes[activeSizeIndex],
               type: activeType,
-            })}
+            }, cartList)}
           </i>
         </div>
       </div>

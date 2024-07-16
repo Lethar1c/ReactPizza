@@ -1,5 +1,10 @@
 import React from "react";
-import { CartContext } from "../../App";
+import {
+  addToCart,
+  removePizza,
+  decrementPizzaCount,
+} from "../../redux/slices/cartSlice";
+import { useDispatch } from "react-redux";
 
 export default function CartItem({
   title,
@@ -10,67 +15,33 @@ export default function CartItem({
   imageUrl,
 }) {
   const typesDescriptor = ["Традиционное", "Тонкое"];
-  const { cartList, setCartList } = React.useContext(CartContext);
 
-  const isPizzasIdentical = (pizza1, pizza2) => {
-    return (
-      pizza1.title === pizza2.title &&
-      pizza1.size === pizza2.size &&
-      pizza1.type === pizza2.type
-    );
-  };
-
-  const findIdenticalPizza = (pizza, pizzaList) => {
-    for (let i = 0; i < pizzaList.length; i++) {
-      if (isPizzasIdentical(pizza, pizzaList[i])) return i;
-    }
-    return -1;
-  };
-
-  const deletePizza = (pizza) => {
-    let pizzaIndex = findIdenticalPizza(pizza, cartList);
-    if (pizzaIndex === -1) return;
-    let cartListCopy = cartList.slice();
-    cartListCopy.splice(pizzaIndex, 1);
-    setCartList(cartListCopy);
-  };
-
-  const editPizzaCount = (pizza, difference) => {
-    let pizzaIndex = findIdenticalPizza(pizza, cartList);
-    if (pizzaIndex === -1) return;
-    let cartListCopy = cartList.slice();
-    cartListCopy[pizzaIndex].count += difference;
-    if (cartListCopy[pizzaIndex].count <= 0) {
-      cartListCopy[pizzaIndex].count -= difference;
-      return;
-    }
-    setCartList(cartListCopy);
-  };
-
-  const pizza = {
-    title: title,
-    price: price,
-    type: type,
-    size: size,
-    imageUrl: imageUrl,
-    count: 1,
-  };
+  const dispatch = useDispatch();
 
   return (
-    <div class="cart__item">
-      <div class="cart__item-img">
-        <img class="pizza-block__image" src={imageUrl} alt="Pizza" />
+    <div className="cart__item">
+      <div className="cart__item-img">
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
-      <div class="cart__item-info">
+      <div className="cart__item-info">
         <h3>{title}</h3>
         <p>
           {typesDescriptor[type]} тесто, {size} см
         </p>
       </div>
-      <div class="cart__item-count">
+      <div className="cart__item-count">
         <div
-          class="button button--outline button--circle cart__item-count-minus"
-          onClick={() => editPizzaCount(pizza, -1)}
+          className="button button--outline button--circle cart__item-count-minus"
+          onClick={() =>
+            dispatch(
+              decrementPizzaCount({
+                title: title,
+                price: price,
+                type: type,
+                size: size,
+              })
+            )
+          }
         >
           <svg
             width="10"
@@ -91,8 +62,17 @@ export default function CartItem({
         </div>
         <b>{count}</b>
         <div
-          class="button button--outline button--circle cart__item-count-plus"
-          onClick={() => editPizzaCount(pizza, 1)}
+          className="button button--outline button--circle cart__item-count-plus"
+          onClick={() =>
+            dispatch(
+              addToCart({
+                title: title,
+                price: price,
+                type: type,
+                size: size,
+              })
+            )
+          }
         >
           <svg
             width="10"
@@ -112,11 +92,23 @@ export default function CartItem({
           </svg>
         </div>
       </div>
-      <div class="cart__item-price">
+      <div className="cart__item-price">
         <b>{price} ₽</b>
       </div>
-      <div class="cart__item-remove" onClick={() => deletePizza(pizza)}>
-        <div class="button button--outline button--circle">
+      <div
+        className="cart__item-remove"
+        onClick={() =>
+          dispatch(
+            removePizza({
+              title: title,
+              price: price,
+              type: type,
+              size: size,
+            })
+          )
+        }
+      >
+        <div className="button button--outline button--circle">
           <svg
             width="10"
             height="10"

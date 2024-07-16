@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SortPanel({pizzas, setPizzas}) {
+export default function SortPanel({ pizzas, setPizzas }) {
   const [popUpShown, setPopUpShown] = React.useState(false);
   const [sortParameterIndex, setSortParameterIndex] = React.useState(0);
 
@@ -11,13 +11,15 @@ export default function SortPanel({pizzas, setPizzas}) {
     setPopUpShown(!popUpShown);
     switch (index) {
       case 0:
-        setPizzas(sortByRating(pizzas))
+        setPizzas(sortByRating(pizzas));
         break;
       case 1:
         setPizzas(sortByPrice(pizzas));
         break;
       case 2:
         setPizzas(sortByAlphabet(pizzas));
+        break;
+      default:
         break;
     }
   };
@@ -30,7 +32,7 @@ export default function SortPanel({pizzas, setPizzas}) {
 
   const sortByRating = (pizzas) => {
     let sortedPizzas = pizzas.slice(); // copy
-    sortedPizzas.sort((a, b) => (b.rating - a.rating));
+    sortedPizzas.sort((a, b) => b.rating - a.rating);
     return sortedPizzas;
   };
 
@@ -38,10 +40,20 @@ export default function SortPanel({pizzas, setPizzas}) {
     let sortedPizzas = pizzas.slice(); // copy
     sortedPizzas.sort((a, b) => (a.title > b.title ? 1 : -1));
     return sortedPizzas;
-  }
+  };
+
+  const sortWindow = React.useRef(null);
+
+  React.useEffect(() => {
+    document.body.addEventListener("click", (e) => {
+      if (!e.composedPath().includes(sortWindow.current)) {
+        setPopUpShown(false);
+      }
+    });
+  }, []);
 
   return (
-    <div className="sort">
+    <div className="sort" ref={sortWindow}>
       <div className="sort__label">
         <svg
           width="10"
