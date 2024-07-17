@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import Search from "./search";
 import Logo from "../../img/pizza-logo.svg";
-import { getCartCount, getCartPrice } from "../../redux/slices/cartSlice";
-import { useSelector } from "react-redux";
+import { getCartCount, getCartPrice, setIsOpened } from "../../redux/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
   const cartList = useSelector((state) => (state.cart.itemList));
+  const isOpened = useSelector((state) => (state.cart.isOpened));
+  const dispatch = useDispatch();
 
   return (
     <div className="header">
@@ -19,8 +21,8 @@ export default function Header() {
         </div>
         <div className="header__control">
           <Search />
-          <div className="header__cart">
-            <Link to="ReactPizza/Cart" className="button button--cart">
+          <div className="header__cart" onClick={() => {dispatch(setIsOpened(true)); window.scrollTo(0, 0)}}>
+            {!isOpened && <Link to="ReactPizza/Cart" className="button button--cart">
               <span>{getCartPrice(cartList)} ₽</span>
               <div className="button__delimiter"></div>
               <svg
@@ -53,7 +55,7 @@ export default function Header() {
                 />
               </svg>
               <span>{getCartCount(cartList)}</span>
-            </Link>
+            </Link>}
           </div>
         </div>
       </div>

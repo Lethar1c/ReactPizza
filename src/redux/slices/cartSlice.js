@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  isOpened: false,
   itemList: [],
   itemCount: 0,
   price: 0,
@@ -87,6 +88,9 @@ export const cartSlice = createSlice({
     setCartList: (state, action) => {
       state.cartList = action.payload;
     },
+    setIsOpened: (state, action) => {
+      state.isOpened = action.payload;
+    }
   },
 });
 
@@ -95,6 +99,7 @@ export const {
   decrementPizzaCount,
   removePizza,
   setCartList,
+  setIsOpened
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

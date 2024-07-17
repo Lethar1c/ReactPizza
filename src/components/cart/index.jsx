@@ -3,7 +3,7 @@ import React from "react";
 import NotFound from "../404/404";
 import CartItem from "./cartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartList } from "../../redux/slices/cartSlice";
+import { setCartList, setIsOpened } from "../../redux/slices/cartSlice";
 
 export default function Cart() {
   const cartList = useSelector((state) => (state.cart.itemList));
@@ -107,7 +107,7 @@ export default function Cart() {
                 Сумма заказа: <b>{cartPrice} ₽</b>
               </span>
             </div>
-            <div className="cart__bottom-buttons">
+            <div className="cart__bottom-buttons" onClick={() => {dispatch(setIsOpened(false)); window.scrollTo(0, 0)}}>
               <Link
                 to="../ReactPizza"
                 className="button button--outline button--add go-back-btn"
@@ -128,10 +128,10 @@ export default function Cart() {
                   />
                 </svg>
 
-                <span>Вернуться назад</span>
+                <span>Назад</span>
               </Link>
               <div className="button pay-btn">
-                <span>Оплатить сейчас</span>
+                <span>К оплате</span>
               </div>
             </div>
           </div>

@@ -603,7 +603,20 @@ body {
   width: 100%;
   border-top: 1px solid #f6f6f6;
   padding-top: 30px;
-  margin-top: 30px
+  margin-top: 30px;
+  position: relative;
+}
+
+.cart__item-title {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.cart__item-control {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
 }
 
 .cart__item-img {
@@ -613,8 +626,7 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-right: 15px;
-  width: 10%
+  margin-right: 7px;
 }
 
 .cart__item-img img {
@@ -633,7 +645,6 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  width: 40%
 }
 
 .cart__item-info h3 {
@@ -658,7 +669,6 @@ body {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  width: 13%
 }
 
 .cart__item-count-minus svg path:first-of-type {
@@ -699,7 +709,6 @@ body {
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  width: 4%
 }
 
 .cart__item-remove .button {
@@ -768,7 +777,7 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  width: 210px;
+  width: 140px;
   border-color: #ddd
 }
 
@@ -799,7 +808,7 @@ body {
 .cart__bottom-buttons .pay-btn {
   font-size: 16px;
   font-weight: 600;
-  width: 210px;
+  width: 140px;
   padding: 16px
 }
 
@@ -897,7 +906,7 @@ body {
   }
   .header__cart {
     position: fixed;
-    bottom: 5vmin;
+    bottom: 20px;
     right: 5vmin;
     z-index: 100;
   }
@@ -906,5 +915,42 @@ body {
 @media (max-width: 768px) {
   .cart__bottom-details {
     flex-direction: column;
+  }
+}
+
+@media (min-width: 800px) {
+  .cart__item-title {
+      flex-direction: row;
+      justify-content: flex-start;
+  }
+}
+
+@media (max-width: 425px) {
+  .content {
+    padding: 20px 0px;
+  }
+  .cart__bottom {
+    margin: 25px 0px;
+  }
+  .cart__item {
+    flex-direction: column;
+  }
+  .cart__item-title, .cart__item-control {
+    width: 100%;
+  }
+  .cart__item-title {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .cart__item-control {
+    margin-top: 20px;
+  }
+  .cart__clear {
+    font-size: 16px;
+    justify-content: flex-end;
+    width: 35%;
+  }
+  .content__title {
+    font-size: 25px;
   }
 }
