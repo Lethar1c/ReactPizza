@@ -85,8 +85,8 @@ export const cartSlice = createSlice({
       state.itemCount = getCartCount(state.itemList);
       state.price = getCartPrice(state.itemList);
     },
-    setCartList: (state, action) => {
-      state.cartList = action.payload;
+    setItemList: (state, action) => {
+      state.itemList = action.payload;
     },
     setIsOpened: (state, action) => {
       state.isOpened = action.payload;
@@ -98,7 +98,7 @@ export const {
   addToCart,
   decrementPizzaCount,
   removePizza,
-  setCartList,
+  setItemList,
   setIsOpened
 } = cartSlice.actions;
 

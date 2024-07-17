@@ -3,7 +3,7 @@ import React from "react";
 import NotFound from "../404/404";
 import CartItem from "./cartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartList, setIsOpened } from "../../redux/slices/cartSlice";
+import { setItemList, setIsOpened } from "../../redux/slices/cartSlice";
 
 export default function Cart() {
   const cartList = useSelector((state) => (state.cart.itemList));
@@ -51,7 +51,7 @@ export default function Cart() {
             </h2>
             <div
               className="cart__clear"
-              onClick={() => dispatch(setCartList([]))}
+              onClick={() => dispatch(setItemList([]))}
             >
               <svg
                 width="20"
