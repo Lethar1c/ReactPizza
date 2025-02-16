@@ -6,14 +6,15 @@ import Content from "./pages/content";
 
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import Login from "./pages/login";
 
 function App() {
   return (
     <div className="App">
       <div className="wrapper">
-        <Header />
         <Routes>
           <Route path="ReactPizza/" element={<Content />} />
+          <Route path="ReactPizza/Login" element={<Login />} />
           <Route path="ReactPizza/Cart" element={<Cart />}>
             <Route path="../ReactPizza/" element={<Content />} />
           </Route>
